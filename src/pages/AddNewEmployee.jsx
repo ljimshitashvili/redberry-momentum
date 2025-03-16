@@ -1,4 +1,18 @@
-const AddNewEmployee = () => {
+import { useEffect, useState } from "react";
+import { getDepartments } from "../services/get";
+
+const AddNewEmployee = ({ departmentList, setDepartmentList }) => {
+  const [newEmployee, setNewEmployee] = useState({
+    name: "",
+    surname: "",
+    avatar: null,
+    department: "",
+  });
+
+  useEffect(() => {
+    getDepartments(setDepartmentList);
+  }, []);
+
   return (
     <div>
       <h1>თანამშრომლის დამატება</h1>
@@ -16,8 +30,13 @@ const AddNewEmployee = () => {
       </label>
       <label htmlFor="department">
         დეპარტამენტი
-        <input type="text" id="department" />
+        <select id="department">
+          {departmentList.map((department) => (
+            <option key={department.id}>{department.name}</option>
+          ))}
+        </select>
       </label>
+      <button onClick={() => getDepartments()}>ADD</button>
     </div>
   );
 };
