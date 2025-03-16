@@ -1,19 +1,21 @@
 import axios from "axios";
 import { token } from "./token";
 
-const getComments = () => {
-  const fetchComments = async () => {
+const getAllTasks = () => {
+  const fetchAllTasks = async () => {
     const response = await axios.get(
-      "https://momentum.redberryinternship.ge/api/tasks/{task}/comments",
+      "https://momentum.redberryinternship.ge/api/tasks",
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
+
     const data = response.data;
   };
-  fetchComments();
+
+  fetchAllTasks();
 };
 
-export default getComments;
+export default getAllTasks;

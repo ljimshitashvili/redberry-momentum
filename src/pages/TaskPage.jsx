@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Filter } from "../components";
 import {
+  getAllTasks,
   getComments,
   getDepartments,
   getEmployees,
@@ -17,6 +18,7 @@ const TaskPage = () => {
     getDepartments();
     getEmployees();
     getComments();
+    getAllTasks();
   }, []);
   return (
     <div className="w-full">
