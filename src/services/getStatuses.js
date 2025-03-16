@@ -1,7 +1,7 @@
 import axios from "axios";
+import { token } from "./token";
 
 const getStatuses = async () => {
-  const token = import.meta.env.VITE_API_TOKEN;
   const fetchStatuses = async () => {
     const response = await axios.get(
       "https://momentum.redberryinternship.ge/api/statuses",
@@ -12,7 +12,6 @@ const getStatuses = async () => {
       }
     );
     const data = response.data;
-    console.log(data);
   };
   fetchStatuses();
 };

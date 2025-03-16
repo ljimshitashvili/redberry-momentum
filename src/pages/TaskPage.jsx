@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Filter } from "../components";
-import { getStatuses } from "../services";
+import { getPriorities, getStatuses } from "../services";
 
 const TaskPage = () => {
   const [status, setTatus] = useState([]);
 
   useEffect(() => {
     getStatuses();
+    getPriorities();
   }, []);
   return (
     <div className="w-full">
