@@ -7,7 +7,7 @@ import {
   getEmployees,
   getPriorities,
   getStatuses,
-} from "../services";
+} from "../services/get";
 
 const TaskPage = () => {
   const [status, setTatus] = useState([]);

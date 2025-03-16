@@ -1,4 +1,4 @@
-import { token } from "./token";
+import { token } from "../token";
 import axios from "axios";
 
 const getPriorities = () => {

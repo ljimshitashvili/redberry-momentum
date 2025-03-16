@@ -1,5 +1,5 @@
 import axios from "axios";
-import { token } from "./token";
+import { token } from "../token";
 
 const getAllTasks = () => {
   const fetchAllTasks = async () => {
