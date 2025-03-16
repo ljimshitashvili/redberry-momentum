@@ -9,9 +9,7 @@ import {
   getStatuses,
 } from "../services/get";
 
-const TaskPage = () => {
-  const [status, setTatus] = useState([]);
-
+const TaskPage = ({ departmentList, employeeList, priorityList }) => {
   useEffect(() => {
     getStatuses();
     getPriorities();
@@ -23,7 +21,11 @@ const TaskPage = () => {
   return (
     <div className="w-full">
       <h1>დავალებების გვერდი</h1>
-      <Filter />
+      <Filter
+        departmentList={departmentList}
+        employeeList={employeeList}
+        priorityList={priorityList}
+      />
     </div>
   );
 };

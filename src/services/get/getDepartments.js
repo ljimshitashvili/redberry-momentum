@@ -10,7 +10,7 @@ const getDepartments = async (setDepartmentsList) => {
       },
     }
   );
-  const data = response.data;
+  const data = await response.data;
   setDepartmentsList(data);
 };
 

@@ -1,20 +1,17 @@
 import axios from "axios";
 import { token } from "../token";
 
-const getEmployees = () => {
-  const fetchEmployees = async () => {
-    const response = await axios.get(
-      "https://momentum.redberryinternship.ge/api/employees",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const data = response.data;
-    console.log(data);
-  };
-  fetchEmployees();
+const getEmployees = async (setEmployees) => {
+  const response = await axios.get(
+    "https://momentum.redberryinternship.ge/api/employees",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = response.data;
+  setEmployees(data);
 };
 
 export default getEmployees;

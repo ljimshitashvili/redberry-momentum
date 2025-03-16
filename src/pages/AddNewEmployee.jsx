@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
-import { getDepartments } from "../services/get";
+import { useState } from "react";
 import { postEmployee } from "../services/post";
 
-const AddNewEmployee = ({ departmentList, setDepartmentList }) => {
+const AddNewEmployee = ({ departmentList }) => {
   const [newEmployee, setNewEmployee] = useState({
     name: "",
     surname: "",
     avatar: null,
     department: "",
   });
-
-  useEffect(() => {
-    getDepartments(setDepartmentList);
-  }, []);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -35,7 +30,6 @@ const AddNewEmployee = ({ departmentList, setDepartmentList }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
-    // Check if the file size is greater than 600 KB
     if (file && file.size > 600 * 1024) {
       alert("File size must be less than 600 KB.");
       return;
