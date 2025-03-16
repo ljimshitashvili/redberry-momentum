@@ -1,10 +1,10 @@
 import axios from "axios";
 import { token } from "./token";
 
-const getDepartments = () => {
-  const fetchDepartments = async () => {
+const getEmployees = () => {
+  const fetchEmployees = async () => {
     const response = await axios.get(
-      "https://momentum.redberryinternship.ge/api/departments",
+      "https://momentum.redberryinternship.ge/api/employees",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -12,8 +12,9 @@ const getDepartments = () => {
       }
     );
     const data = response.data;
+    console.log(data);
   };
-  fetchDepartments();
+  fetchEmployees();
 };
 
-export default getDepartments;
+export default getEmployees;

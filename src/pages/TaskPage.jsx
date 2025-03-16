@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Filter } from "../components";
-import { getDepartments, getPriorities, getStatuses } from "../services";
+import {
+  getDepartments,
+  getEmployees,
+  getPriorities,
+  getStatuses,
+} from "../services";
 
 const TaskPage = () => {
   const [status, setTatus] = useState([]);
@@ -9,6 +14,7 @@ const TaskPage = () => {
     getStatuses();
     getPriorities();
     getDepartments();
+    getEmployees();
   }, []);
   return (
     <div className="w-full">
