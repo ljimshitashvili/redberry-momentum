@@ -90,6 +90,7 @@ const AddNewEmployee = ({ departmentList }) => {
             )?.name || ""
           }
         >
+          <option value=""></option>
           {departmentList.map((department) => (
             <option key={department.id + 1}>{department.name}</option>
           ))}

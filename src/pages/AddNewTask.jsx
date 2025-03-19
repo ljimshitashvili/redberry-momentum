@@ -1,5 +1,7 @@
-import { useState } from "react";
 import { postTask } from "../services/post";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import AddNewTaskSchema from "../validation/scheme";
+import { useEffect } from "react";
 
 const AddNewTask = ({
   departmentList,
@@ -15,72 +17,40 @@ const AddNewTask = ({
     return tomorrow.toISOString().split("T")[0];
   };
 
-  const [newTask, setNewTask] = useState({
+  const initialValues = {
     name: "",
     description: "",
     due_date: getTomorrowDate(),
-    status: { id: "", name: "" },
-    priority: { id: "", name: "" },
-    department: { id: "", name: "" },
-    employee: { id: "", name: "", surname: "", avatar: "", department_id: "" },
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setNewTask((prevTask) => {
-      if (["status", "priority", "department", "employee"].includes(name)) {
-        const selectedOption =
-          name === "status"
-            ? statusesList.find((item) => item.name === value)
-            : name === "priority"
-            ? priorityList.find((item) => item.name === value)
-            : name === "department"
-            ? departmentList.find((item) => item.name === value)
-            : employeeList.find(
-                (item) => `${item.name} ${item.surname}` === value
-              );
-
-        return {
-          ...prevTask,
-          [name]: { id: selectedOption?.id || "", name: value },
-        };
-      }
-      return { ...prevTask, [name]: value };
-    });
+    status: "",
+    priority: "",
+    department: "",
+    employee: "",
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values, { resetForm }) => {
     const formattedTask = {
-      name: newTask.name,
-      description: newTask.description,
-      due_date: newTask.due_date,
-      status_id: newTask.status.id,
-      priority_id: newTask.priority.id,
-      department_id: newTask.department.id,
-      employee_id: newTask.employee.id,
+      name: values.name,
+      description: values.description,
+      due_date: values.due_date,
+      status_id:
+        statusesList.find((status) => status.name === values.status)?.id || "",
+      priority_id:
+        priorityList.find((priority) => priority.name === values.priority)
+          ?.id || "საშუალო",
+      department_id:
+        departmentList.find((dept) => dept.name === values.department_id)?.id ||
+        "",
+      employee_id:
+        employeeList.find(
+          (employee) =>
+            `${employee.name} ${employee.surname}` === values.employee
+        )?.id || "",
     };
 
     const response = await createTask(formattedTask);
     if (response) {
       alert("დავალება წარმატებით დაემატა!");
-      setNewTask({
-        name: "",
-        description: "",
-        due_date: getTomorrowDate(),
-        status: { id: "", name: "" },
-        priority: { id: "", name: "" },
-        department: { id: "", name: "" },
-        employee: {
-          id: "",
-          name: "",
-          surname: "",
-          avatar: "",
-          department_id: "",
-        },
-      });
+      resetForm();
     }
   };
 
@@ -88,94 +58,166 @@ const AddNewTask = ({
     <div>
       <h1>შექმენი ახალი დავალება</h1>
       <div className="bg-[#DDD2FF] p-4">
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="name">სათაური*</label>
-          <input
-            type="text"
-            name="name"
-            value={newTask.name}
-            onChange={handleChange}
-            className="border border-black w-full"
-          />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={AddNewTaskSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, values }) => {
+            useEffect(() => {
+              setFieldValue("employee", "");
+            }, [values.department, setFieldValue]);
 
-          <label htmlFor="description">აღწერა*</label>
-          <input
-            type="text"
-            name="description"
-            value={newTask.description}
-            onChange={handleChange}
-            className="border border-black w-full"
-          />
+            return (
+              <Form>
+                <div>
+                  <label htmlFor="name">სათაური*</label>
+                  <Field
+                    type="text"
+                    name="name"
+                    className="border border-black w-full"
+                  />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-          <label htmlFor="department">დეპარტამენტი*</label>
-          <select
-            name="department"
-            value={newTask.department.name}
-            onChange={handleChange}
-            className="border border-black w-full"
-          >
-            {departmentList.map((dept) => (
-              <option key={dept.id}>{dept.name}</option>
-            ))}
-          </select>
+                <div>
+                  <label htmlFor="description">აღწერა*</label>
+                  <Field
+                    type="text"
+                    name="description"
+                    className="border border-black w-full"
+                  />
+                  <ErrorMessage
+                    name="description"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-          <label htmlFor="employee">პასუხისმგებელი თანამშრომელი*</label>
-          <select
-            name="employee"
-            value={`${newTask.employee.name} ${newTask.employee.surname}`}
-            onChange={handleChange}
-            className="border border-black w-full"
-          >
-            <option value={""}></option>
+                <div>
+                  <label htmlFor="department">დეპარტამენტი*</label>
+                  <Field
+                    as="select"
+                    name="department"
+                    className="border border-black w-full"
+                  >
+                    <option value=""></option>
+                    {departmentList.map((dept) => (
+                      <option key={dept.id} value={dept.name}>
+                        {dept.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="department"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-            {employeeList.map((staff) => (
-              <option key={staff.id}>
-                {staff.name} {staff.surname}
-              </option>
-            ))}
-          </select>
+                {values.department && (
+                  <div>
+                    <label htmlFor="employee">
+                      პასუხისმგებელი თანამშრომელი*
+                    </label>
+                    <Field
+                      as="select"
+                      name="employee"
+                      className="border border-black w-full"
+                    >
+                      <option value=""></option>
+                      {employeeList
+                        .filter(
+                          (staff) => staff.department.name === values.department
+                        )
+                        .map((staff) => (
+                          <option
+                            key={staff.id}
+                            value={`${staff.name} ${staff.surname}`}
+                          >
+                            {staff.name} {staff.surname}
+                          </option>
+                        ))}
+                    </Field>
+                    <ErrorMessage
+                      name="employee"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+                )}
 
-          <label htmlFor="priority">პრიორიტეტი*</label>
-          <select
-            name="priority"
-            value={newTask.priority.name}
-            onChange={handleChange}
-            className="border border-black w-full"
-          >
-            <option value={""}></option>
+                <div>
+                  <label htmlFor="priority">პრიორიტეტი*</label>
+                  <Field
+                    as="select"
+                    name="priority"
+                    className="border border-black w-full"
+                  >
+                    <option value=""></option>
+                    {priorityList.map((priority) => (
+                      <option key={priority.id} value={priority.name}>
+                        {priority.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="priority"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-            {priorityList.map((priority) => (
-              <option key={priority.id}>{priority.name}</option>
-            ))}
-          </select>
+                <div>
+                  <label htmlFor="status">სტატუსი*</label>
+                  <Field
+                    as="select"
+                    name="status"
+                    className="border border-black w-full"
+                  >
+                    <option value=""></option>
+                    {statusesList.map((status) => (
+                      <option key={status.id} value={status.name}>
+                        {status.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="status"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-          <label htmlFor="status">სტატუსი*</label>
-          <select
-            name="status"
-            value={newTask.status.name}
-            onChange={handleChange}
-            className="border border-black w-full"
-          >
-            <option value={""}></option>
-            {statusesList.map((status) => (
-              <option key={status.id}>{status.name}</option>
-            ))}
-          </select>
+                <div>
+                  <label htmlFor="due_date">დედლაინი</label>
+                  <Field
+                    type="date"
+                    name="due_date"
+                    min={new Date().toISOString().split("T")[0]}
+                    className="border border-black w-full"
+                  />
+                  <ErrorMessage
+                    name="due_date"
+                    component="div"
+                    className="text-red-500"
+                  />
+                </div>
 
-          <label htmlFor="due_date">დედლაინი</label>
-          <input
-            type="date"
-            name="due_date"
-            value={newTask.due_date}
-            min={new Date().toISOString().split("T")[0]}
-            onChange={handleChange}
-            className="border border-black w-full"
-          />
-
-          <button type="submit" className="bg-[#8338EC] text-white mt-4 p-2">
-            დავალების შექმნა
-          </button>
-        </form>
+                <button
+                  type="submit"
+                  className="bg-[#8338EC] text-white mt-4 p-2"
+                >
+                  დავალების შექმნა
+                </button>
+              </Form>
+            );
+          }}
+        </Formik>
       </div>
     </div>
   );

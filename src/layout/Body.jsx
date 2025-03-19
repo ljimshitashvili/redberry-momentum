@@ -25,7 +25,7 @@ const Body = () => {
     getStatuses(setStatusesList);
     getAllTasks(setAllTasksList);
   }, []);
-  console.log(priorityList);
+  console.log(employeeList);
 
   return (
     <div className="w-full h-full ">
