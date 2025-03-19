@@ -6,7 +6,6 @@ const AddNewTask = ({
   employeeList,
   priorityList,
   statusesList,
-  allTasksList,
 }) => {
   const { createTask } = postTask();
 
@@ -54,21 +53,14 @@ const AddNewTask = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
-    if (!newTask.name || !newTask.description || !newTask.status.id) {
-      alert("გთხოვთ, შეავსოთ ყველა აუცილებელი ველი!");
-      return;
-    }
-
-    // Construct correct API payload
     const formattedTask = {
       name: newTask.name,
       description: newTask.description,
       due_date: newTask.due_date,
-      status_id: newTask.status.id, // Send only the ID
-      priority_id: newTask.priority.id, // Send only the ID
-      department_id: newTask.department.id, // Send only the ID
-      employee_id: newTask.employee.id, // Send only the ID
+      status_id: newTask.status.id,
+      priority_id: newTask.priority.id,
+      department_id: newTask.department.id,
+      employee_id: newTask.employee.id,
     };
 
     const response = await createTask(formattedTask);
@@ -134,6 +126,8 @@ const AddNewTask = ({
             onChange={handleChange}
             className="border border-black w-full"
           >
+            <option value={""}></option>
+
             {employeeList.map((staff) => (
               <option key={staff.id}>
                 {staff.name} {staff.surname}
@@ -148,6 +142,8 @@ const AddNewTask = ({
             onChange={handleChange}
             className="border border-black w-full"
           >
+            <option value={""}></option>
+
             {priorityList.map((priority) => (
               <option key={priority.id}>{priority.name}</option>
             ))}
@@ -160,6 +156,7 @@ const AddNewTask = ({
             onChange={handleChange}
             className="border border-black w-full"
           >
+            <option value={""}></option>
             {statusesList.map((status) => (
               <option key={status.id}>{status.name}</option>
             ))}

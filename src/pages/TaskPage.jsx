@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Filter } from "../components";
+import { Filter, TasksContainer } from "../components";
 import {
   getAllTasks,
   getComments,
@@ -33,9 +33,7 @@ const TaskPage = ({
         employeeList={employeeList}
         priorityList={priorityList}
       />
-      {allTasksList.map((task) => (
-        <div key={task.id}>{<p>{task.priority.name}</p>}</div>
-      ))}
+      <TasksContainer allTasksList={allTasksList} />
     </div>
   );
 };
