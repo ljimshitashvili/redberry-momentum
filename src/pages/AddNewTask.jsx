@@ -2,6 +2,7 @@ import { postTask } from "../services/post";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import AddNewTaskSchema from "../validation/scheme";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddNewTask = ({
   departmentList,
@@ -10,11 +11,17 @@ const AddNewTask = ({
   statusesList,
 }) => {
   const { createTask } = postTask();
+  const navigate = useNavigate();
 
   const getTomorrowDate = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     return tomorrow.toISOString().split("T")[0];
+  };
+
+  const getSavedFormValues = () => {
+    const savedValues = localStorage.getItem("newTaskFormValues");
+    return savedValues ? JSON.parse(savedValues) : {};
   };
 
   const initialValues = {
@@ -25,6 +32,7 @@ const AddNewTask = ({
     priority: "",
     department: "",
     employee: "",
+    ...getSavedFormValues(),
   };
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -38,7 +46,7 @@ const AddNewTask = ({
         priorityList.find((priority) => priority.name === values.priority)
           ?.id || "საშუალო",
       department_id:
-        departmentList.find((dept) => dept.name === values.department_id)?.id ||
+        departmentList.find((dept) => dept.name === values.department)?.id ||
         "",
       employee_id:
         employeeList.find(
@@ -51,7 +59,13 @@ const AddNewTask = ({
     if (response) {
       alert("დავალება წარმატებით დაემატა!");
       resetForm();
+      localStorage.removeItem("newTaskFormValues");
+      navigate("/");
     }
+  };
+
+  const handleChange = (values) => {
+    localStorage.setItem("newTaskFormValues", JSON.stringify(values));
   };
 
   return (
@@ -62,10 +76,17 @@ const AddNewTask = ({
           initialValues={initialValues}
           validationSchema={AddNewTaskSchema}
           onSubmit={handleSubmit}
+          enableReinitialize={true}
         >
           {({ setFieldValue, values }) => {
             useEffect(() => {
-              setFieldValue("employee", "");
+              handleChange(values);
+            }, [values]);
+
+            useEffect(() => {
+              if (values.department) {
+                setFieldValue("employee", "");
+              }
             }, [values.department, setFieldValue]);
 
             return (
