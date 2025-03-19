@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { arrow } from "../assets";
 import Departments from "./Departments";
 import Priorities from "./Priorities";
@@ -6,6 +6,7 @@ import Employees from "./Employees";
 
 const Filter = ({ departmentList, employeeList, priorityList }) => {
   const [filter, setFilter] = useState("");
+  const [filterVisible, setFilterVisible] = useState(false);
 
   return (
     <div className="flex relative">
@@ -27,7 +28,9 @@ const Filter = ({ departmentList, employeeList, priorityList }) => {
           <img src={arrow} alt="Arrow Icon" />
         </span>
       </button>
-      <div className="absolute w-[688px] h-[274px] top-[110px] left-[118px]">
+      <div
+        className={` absolute w-[688px] h-[274px] top-[110px] left-[118px] `}
+      >
         {filter === "department" && (
           <Departments departmentList={departmentList} />
         )}

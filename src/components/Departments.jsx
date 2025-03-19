@@ -1,10 +1,10 @@
 const Departments = ({ departmentList }) => {
   return (
-    <>
+    <select>
       {departmentList.map((department) => (
-        <div key={department.id}>{department.name}</div>
+        <option key={department.id}>{department.name}</option>
       ))}
-    </>
+    </select>
   );
 };
 

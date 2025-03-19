@@ -1,7 +1,7 @@
 import axios from "axios";
 import { token } from "../token";
 
-const getStatuses = async () => {
+const getStatuses = async (param) => {
   const response = await axios.get(
     "https://momentum.redberryinternship.ge/api/statuses",
     {
@@ -11,6 +11,7 @@ const getStatuses = async () => {
     }
   );
   const data = response.data;
+  param(data);
 };
 
 export default getStatuses;

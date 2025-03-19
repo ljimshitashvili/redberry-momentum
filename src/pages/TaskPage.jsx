@@ -9,7 +9,12 @@ import {
   getStatuses,
 } from "../services/get";
 
-const TaskPage = ({ departmentList, employeeList, priorityList }) => {
+const TaskPage = ({
+  departmentList,
+  employeeList,
+  priorityList,
+  allTasksList,
+}) => {
   useEffect(() => {
     getStatuses();
     getPriorities();
@@ -18,6 +23,8 @@ const TaskPage = ({ departmentList, employeeList, priorityList }) => {
     getComments();
     getAllTasks();
   }, []);
+  console.log("all tasks", allTasksList);
+
   return (
     <div className="w-full">
       <h1>დავალებების გვერდი</h1>
@@ -26,6 +33,9 @@ const TaskPage = ({ departmentList, employeeList, priorityList }) => {
         employeeList={employeeList}
         priorityList={priorityList}
       />
+      {allTasksList.map((task) => (
+        <div key={task.id}>{<p>{task.priority.name}</p>}</div>
+      ))}
     </div>
   );
 };
