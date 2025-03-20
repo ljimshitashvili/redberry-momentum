@@ -1,7 +1,7 @@
 import axios from "axios";
 import { token } from "../token";
 
-const getAllTasks = async (param) => {
+const getAllTasks = async () => {
   const response = await axios.get(
     "https://momentum.redberryinternship.ge/api/tasks",
     {
@@ -11,8 +11,7 @@ const getAllTasks = async (param) => {
     }
   );
 
-  const data = response.data;
-  param(data);
+  return response.data;
 };
 
 export default getAllTasks;

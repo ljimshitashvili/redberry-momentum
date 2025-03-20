@@ -12,7 +12,7 @@ const getTask = async () => {
   );
 
   const data = response.data;
-  console.log(data);
+  return data;
 };
 
 export default getTask;

@@ -1,7 +1,5 @@
-//Routes of the website is changed in this component. It contains Routes.
-
 import { useEffect, useState } from "react";
-import { AddNewEmployee, TaskPage, AddNewTask } from "../pages";
+import { AddNewEmployee, TaskPage, AddNewTask, TaskDetails } from "../pages";
 import { Route, Routes } from "react-router-dom";
 import {
   getAllTasks,
@@ -9,8 +7,8 @@ import {
   getEmployees,
   getPriorities,
   getStatuses,
+  getTask,
 } from "../services/get";
-
 const Body = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
@@ -18,12 +16,32 @@ const Body = () => {
   const [statusesList, setStatusesList] = useState([]);
   const [allTasksList, setAllTasksList] = useState([]);
 
+  const updateTaskInList = (taskId, newStatusId) => {
+    setAllTasksList((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id.toString() === taskId
+          ? { ...task, status: { ...task.status, id: newStatusId } }
+          : task
+      )
+    );
+  };
+
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tasks = await getAllTasks();
+        console.log("Fetched tasks:", tasks);
+        setAllTasksList(tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchData();
     getDepartments(setDepartmentList);
     getEmployees(setEmployeeList);
     getPriorities(setPriorityList);
     getStatuses(setStatusesList);
-    getAllTasks(setAllTasksList);
   }, []);
   console.log(employeeList);
 
@@ -38,6 +56,7 @@ const Body = () => {
               employeeList={employeeList}
               priorityList={priorityList}
               allTasksList={allTasksList}
+              updateTaskInList={updateTaskInList}
             />
           }
         />
@@ -45,6 +64,16 @@ const Body = () => {
           path="/add-employee"
           element={<AddNewEmployee departmentList={departmentList} />}
         />
+        <Route
+          path="/task/:taskId"
+          element={
+            <TaskDetails
+              allTasksList={allTasksList}
+              updateTaskInList={updateTaskInList}
+            />
+          }
+        />
+
         <Route
           path="/add-new-task"
           element={

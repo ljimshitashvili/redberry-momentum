@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Filter, TasksContainer } from "../components";
 import {
   getAllTasks,
-  getComments,
   getDepartments,
   getEmployees,
   getPriorities,
@@ -13,17 +12,21 @@ const TaskPage = ({
   departmentList,
   employeeList,
   priorityList,
-  allTasksList,
+  updateTaskInList,
 }) => {
+  const [allTasksList, setAllTasksList] = useState([]);
+
   useEffect(() => {
-    getStatuses();
-    getPriorities();
-    getDepartments();
-    getEmployees();
-    getComments();
-    getAllTasks();
+    const fetchData = async () => {
+      try {
+        const tasks = await getAllTasks();
+        setAllTasksList(tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    fetchData();
   }, []);
-  console.log("all tasks", allTasksList);
 
   return (
     <div className="w-full">
@@ -33,7 +36,10 @@ const TaskPage = ({
         employeeList={employeeList}
         priorityList={priorityList}
       />
-      <TasksContainer allTasksList={allTasksList} />
+      <TasksContainer
+        allTasksList={allTasksList}
+        updateTaskInList={updateTaskInList}
+      />
     </div>
   );
 };
