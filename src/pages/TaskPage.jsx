@@ -30,7 +30,9 @@ const TaskPage = ({
 
   return (
     <div className="w-full">
-      <h1>დავალებების გვერდი</h1>
+      <h1 className="font-semibold text-[34px] color-[#212529] mb-[52px]">
+        დავალებების გვერდი
+      </h1>
       <Filter
         departmentList={departmentList}
         employeeList={employeeList}

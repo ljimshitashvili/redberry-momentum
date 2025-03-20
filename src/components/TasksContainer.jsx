@@ -4,10 +4,18 @@ import { Link } from "react-router-dom";
 
 const TasksContainer = ({ allTasksList, updateTaskInList }) => {
   const groupedTasks = {
-    1: { title: "დასაწყები", tasks: [] },
-    2: { title: "პროგრესში", tasks: [] },
-    3: { title: "მზად ტესტირებისთვის", tasks: [] },
-    4: { title: "დასრულებული", tasks: [] },
+    1: { title: "დასაწყები", color: "#F7BC30", tasks: [] },
+    2: { title: "პროგრესში", color: "#FB5607", tasks: [] },
+    3: { title: "მზად ტესტირებისთვის", color: "#FF006E", tasks: [] },
+    4: { title: "დასრულებული", color: "#3A86FF", tasks: [] },
+  };
+
+  const departmentShortNames = {
+    "ადმინისტრაციის დეპარტამენტი": "ადმ. დეპ.",
+    "მარკეტინგის დეპარტამენტი": "მარკ. დეპ.",
+    "ტექნიკური დეპარტამენტი": "ტექ. დეპ.",
+    "ფინანსთა დეპარტამენტი": "ფინ. დეპ.",
+    "მენეჯმენტის დეპარტამენტი": "მენეჯმენტი",
   };
 
   allTasksList.forEach((task) => {
@@ -19,21 +27,62 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
   const formatDueDate = (date) =>
     format(new Date(date), "dd MMMM, yyyy", { locale: ka });
 
+  console.log(groupedTasks);
+
   return (
-    <div className="flex">
+    <div className="flex gap-[52px] mt-[79px]">
       {Object.entries(groupedTasks).map(([statusId, { title, tasks }]) => (
-        <div key={statusId} className="p-4 border-r border-gray-300 w-1/4">
-          <h1 className="text-lg font-bold mb-2">{title}</h1>
+        <div key={statusId} className=" w-1/4">
+          <h1
+            style={{ backgroundColor: groupedTasks[statusId].color }}
+            className={`text-[20px] font-medium w-[381] h-[54px] rounded-[10px] flex items-center justify-center  text-[#fff] mb-[30px]`}
+          >
+            {title}
+          </h1>
           {tasks.map((task) => (
             <Link
               to={`/task/${task.id}`}
               key={task.id}
-              className="block border p-2 mb-2 bg-white shadow-sm rounded-lg"
+              style={{ borderColor: groupedTasks[statusId].color }}
+              className="block border-[1px] rounded-[15px] mb-[30px] p-[20px]"
             >
               <div className="flex justify-between">
-                <div className="flex space-x-2">
-                  <p className="font-semibold">{task.priority.name}</p>
-                  <p className="text-gray-600">{task.department.name}</p>
+                <div
+                  className="flex border-[0.5px] rounded-[4px] p-[4px] w-[86px] h-[26px] "
+                  style={{
+                    borderColor:
+                      task.priority.name === "დაბალი"
+                        ? "#08A508"
+                        : task.priority.name === "საშუალო"
+                        ? "#FFBE0B"
+                        : task.priority.name === "მაღალი"
+                        ? "#FA4D4D"
+                        : "#fff",
+                  }}
+                >
+                  <p
+                    className="font-semibold flex items-center justify-center gap-[4.5px] text-[12px]"
+                    style={{
+                      color:
+                        task.priority.name === "დაბალი"
+                          ? "#08A508"
+                          : task.priority.name === "საშუალო"
+                          ? "#FFBE0B"
+                          : task.priority.name === "მაღალი"
+                          ? "#FA4D4D"
+                          : "#fff",
+                    }}
+                  >
+                    <img
+                      src={task.priority.icon}
+                      alt="Priority Icon"
+                      className="w-[12px]"
+                    />
+                    {task.priority.name}
+                  </p>
+                  <p className="text-gray-600">
+                    {departmentShortNames[task.department.name]}
+                  </p>
                 </div>
                 <p className="text-sm text-gray-500">
                   {formatDueDate(task.due_date)}

@@ -9,20 +9,29 @@ const Filter = ({ departmentList, employeeList, priorityList }) => {
   const [filterVisible, setFilterVisible] = useState(false);
 
   return (
-    <div className="flex relative">
-      <button className="flex" onClick={() => setFilter("department")}>
+    <div className="flex relative h-[44px] w-[688px] border-[1px] border-[#DEE2E6] rounded-[10px] px-[18px] justify-between items-center">
+      <button
+        className="flex gap-2 cursor-pointer hover:text-[#8338EC]"
+        onClick={() => setFilter("department")}
+      >
         დეპარტამენტი
         <span>
           <img src={arrow} alt="Arrow Icon" />
         </span>
       </button>
-      <button className="flex" onClick={() => setFilter("priority")}>
+      <button
+        className="flex gap-2 cursor-pointer hover:text-[#8338EC]"
+        onClick={() => setFilter("priority")}
+      >
         პრიორიტეტი
         <span>
           <img src={arrow} alt="Arrow Icon" />
         </span>
       </button>
-      <button className="flex" onClick={() => setFilter("employee")}>
+      <button
+        className="flex gap-2 cursor-pointer hover:text-[#8338EC]"
+        onClick={() => setFilter("employee")}
+      >
         თანამშრომელი
         <span>
           <img src={arrow} alt="Arrow Icon" />
