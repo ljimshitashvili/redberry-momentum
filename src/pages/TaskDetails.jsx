@@ -2,8 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import updateTaskStatus from "../services/put/changeTaskStatus";
+import { CommentsSection } from "../components";
 
-const TaskDetails = ({ allTasksList, updateTaskInList }) => {
+const TaskDetails = ({
+  allTasksList,
+  updateTaskInList,
+  commentsList,
+  setCommentsList,
+}) => {
   const { taskId } = useParams();
   const [statuses, setStatuses] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -94,6 +100,11 @@ const TaskDetails = ({ allTasksList, updateTaskInList }) => {
         {loading && <p className="text-blue-500 text-sm mt-2">Updating...</p>}
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
       </div>
+      <CommentsSection
+        commentsList={commentsList}
+        taskId={taskId}
+        setCommentsList={setCommentsList}
+      />
     </div>
   );
 };

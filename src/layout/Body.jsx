@@ -7,7 +7,7 @@ import {
   getEmployees,
   getPriorities,
   getStatuses,
-  getTask,
+  getComments,
 } from "../services/get";
 const Body = () => {
   const [departmentList, setDepartmentList] = useState([]);
@@ -15,6 +15,7 @@ const Body = () => {
   const [priorityList, setPriorityList] = useState([]);
   const [statusesList, setStatusesList] = useState([]);
   const [allTasksList, setAllTasksList] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
 
   const updateTaskInList = (taskId, newStatusId) => {
     setAllTasksList((prevTasks) =>
@@ -27,23 +28,32 @@ const Body = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllTasks = async () => {
       try {
         const tasks = await getAllTasks();
-        console.log("Fetched tasks:", tasks);
         setAllTasksList(tasks);
       } catch (error) {
         console.error("Error fetching tasks:", error);
       }
     };
 
-    fetchData();
+    const fetchComments = async () => {
+      try {
+        const comments = await getComments();
+        setCommentsList(comments);
+        console.log("commentsList: ", commentsList);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
+    fetchAllTasks();
+    fetchComments();
     getDepartments(setDepartmentList);
     getEmployees(setEmployeeList);
     getPriorities(setPriorityList);
     getStatuses(setStatusesList);
   }, []);
-  console.log(employeeList);
 
   return (
     <div className="w-full h-full ">
@@ -70,6 +80,8 @@ const Body = () => {
             <TaskDetails
               allTasksList={allTasksList}
               updateTaskInList={updateTaskInList}
+              commentsList={commentsList}
+              setCommentsList={setCommentsList}
             />
           }
         />
