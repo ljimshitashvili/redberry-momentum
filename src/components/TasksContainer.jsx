@@ -11,11 +11,19 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
   };
 
   const departmentShortNames = {
-    "ადმინისტრაციის დეპარტამენტი": "ადმ. დეპ.",
-    "მარკეტინგის დეპარტამენტი": "მარკ. დეპ.",
-    "ტექნიკური დეპარტამენტი": "ტექ. დეპ.",
-    "ფინანსთა დეპარტამენტი": "ფინ. დეპ.",
-    "მენეჯმენტის დეპარტამენტი": "მენეჯმენტი",
+    "ადმინისტრაციის დეპარტამენტი": { shortName: "ადმ. დეპ.", color: "#F7BC30" },
+    "ადამიანური რესურსების დეპარტამენტი": {
+      shortName: "რეს. დეპ.",
+      color: "#FF66A8",
+    },
+    "გაყიდვები და მარკეტინგის დეპარტამენტი": {
+      shortName: "გაყიდვები",
+      color: "#FFD86D",
+    },
+    "ფინანსების დეპარტამენტი": { shortName: "ფინანსები.", color: "#FD9A6A" },
+    "ლოჯისტიკის დეპარტამენტი": { shortName: "ლოჯისტიკა", color: "#89B6FF" },
+    "ტექნოლოგიების დეპარტამენტი": { shortName: "ტექ. დეპ", color: "#FFBE0B" },
+    "მედიის დეპარტამენტი": { shortName: "მედია", color: "#FA4D4D" },
   };
 
   allTasksList.forEach((task) => {
@@ -48,7 +56,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
             >
               <div className="flex justify-between align-center mb-7">
                 <div
-                  className="flex border-[0.5px] rounded-[4px] p-[4px] w-[86px] h-[26px] "
+                  className="flex items-center gap-[10px]"
                   style={{
                     borderColor:
                       task.priority.name === "დაბალი"
@@ -61,7 +69,8 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
                   }}
                 >
                   <p
-                    className="font-semibold flex items-center justify-center gap-[4.5px] text-[12px]"
+                    className="font-semibold flex items-center justify-center gap-[4.5px] text-[12px]
+                    border-[0.5px] rounded-[4px] p-[4px] w-[86px] h-[26px]"
                     style={{
                       color:
                         task.priority.name === "დაბალი"
@@ -80,16 +89,30 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
                     />
                     {task.priority.name}
                   </p>
-                  <p className="text-gray-600">
-                    {departmentShortNames[task.department.name]}
+                  <p
+                    className="w-[88px] h-[24px] rounded-[15px] text-[12px] text-[#fff] flex items-center justify-center"
+                    style={{
+                      backgroundColor:
+                        departmentShortNames[task.department.name]?.color, // Access the department name
+                    }}
+                  >
+                    {departmentShortNames[task.department.name]?.shortName}
                   </p>
                 </div>
                 <p className="text-[12px] text-[#212529] font-normal flex items-center">
                   {formatDueDate(task.due_date)}
                 </p>
               </div>
-              <h2 className="text-md font-semibold mt-1">{task.name}</h2>
-              <p className="text-sm text-gray-700">{task.description}</p>
+              <h2 className="text-[15px] text-[#212529] font-medium h-[18px] mb-[12px]">
+                {task.name}
+              </h2>
+              <p className="text-[14px] text-[#343A40] font-normal max-w-[320px] overflow-wrap break-words mb-[28px]">
+                {task.description
+                  ? task.description.length > 100
+                    ? `${task.description.slice(0, 100)}...`
+                    : task.description
+                  : ""}
+              </p>
               <div className="flex items-center mt-2">
                 <img
                   src={task.employee.avatar}
