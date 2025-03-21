@@ -13,6 +13,7 @@ const TaskPage = ({
   employeeList,
   priorityList,
   updateTaskInList,
+  commentsList,
 }) => {
   const [allTasksList, setAllTasksList] = useState([]);
 
@@ -39,6 +40,7 @@ const TaskPage = ({
         priorityList={priorityList}
       />
       <TasksContainer
+        commentsList={commentsList}
         allTasksList={allTasksList}
         updateTaskInList={updateTaskInList}
       />

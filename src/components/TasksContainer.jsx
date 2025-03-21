@@ -1,8 +1,9 @@
 import { format } from "date-fns";
 import { ka } from "date-fns/locale";
 import { Link } from "react-router-dom";
+import { comment } from "../assets";
 
-const TasksContainer = ({ allTasksList, updateTaskInList }) => {
+const TasksContainer = ({ allTasksList, commentsList }) => {
   const groupedTasks = {
     1: { title: "დასაწყები", color: "#F7BC30", tasks: [] },
     2: { title: "პროგრესში", color: "#FB5607", tasks: [] },
@@ -35,7 +36,9 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
   const formatDueDate = (date) =>
     format(new Date(date), "dd MMM, yyyy", { locale: ka });
 
-  console.log(groupedTasks);
+  const taskComments = commentsList.filter(
+    (comment) => comment.taskId === task.id
+  );
 
   return (
     <div className="flex gap-[52px] mt-[79px]">
@@ -54,7 +57,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
               style={{ borderColor: groupedTasks[statusId].color }}
               className="block border-[1px] rounded-[15px] mb-[30px] p-[20px]"
             >
-              <div className="flex justify-between align-center mb-7">
+              <div className="flex justify-between items-center mb-7">
                 <div
                   className="flex items-center gap-[10px]"
                   style={{
@@ -93,7 +96,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
                     className="w-[88px] h-[24px] rounded-[15px] text-[12px] text-[#fff] flex items-center justify-center"
                     style={{
                       backgroundColor:
-                        departmentShortNames[task.department.name]?.color, // Access the department name
+                        departmentShortNames[task.department.name]?.color,
                     }}
                   >
                     {departmentShortNames[task.department.name]?.shortName}
@@ -113,14 +116,15 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
                     : task.description
                   : ""}
               </p>
-              <div className="flex items-center mt-2">
+              <div className="flex items-center justify-between w-full mt-2">
                 <img
                   src={task.employee.avatar}
-                  className="w-8 h-8 rounded-full"
+                  className="w-[31px] h-[31px] rounded-full"
                   alt="Avatar"
                 />
-                <p className="ml-2 text-sm text-gray-600">
-                  კომენტარების რაოდენობა
+                <p className="flex w-[34px] h-[22px] items-center justify-between font-normal text-[14px] text-[#212529]">
+                  <img src={comment} alt="Comment Icon" />
+                  {taskComments.length}
                 </p>
               </div>
             </Link>

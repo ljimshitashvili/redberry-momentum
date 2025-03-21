@@ -69,6 +69,7 @@ const Body = () => {
               priorityList={priorityList}
               allTasksList={allTasksList}
               updateTaskInList={updateTaskInList}
+              commentsList={commentsList}
             />
           }
         />
