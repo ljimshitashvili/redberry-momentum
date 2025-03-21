@@ -25,7 +25,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
   });
 
   const formatDueDate = (date) =>
-    format(new Date(date), "dd MMMM, yyyy", { locale: ka });
+    format(new Date(date), "dd MMM, yyyy", { locale: ka });
 
   console.log(groupedTasks);
 
@@ -46,7 +46,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
               style={{ borderColor: groupedTasks[statusId].color }}
               className="block border-[1px] rounded-[15px] mb-[30px] p-[20px]"
             >
-              <div className="flex justify-between">
+              <div className="flex justify-between align-center mb-7">
                 <div
                   className="flex border-[0.5px] rounded-[4px] p-[4px] w-[86px] h-[26px] "
                   style={{
@@ -84,7 +84,7 @@ const TasksContainer = ({ allTasksList, updateTaskInList }) => {
                     {departmentShortNames[task.department.name]}
                   </p>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-[12px] text-[#212529] font-normal flex items-center">
                   {formatDueDate(task.due_date)}
                 </p>
               </div>
