@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { Navbar, Body } from "./layout";
 
 function App() {
+  const [toggleWindow, setToggleWindow] = useState(false);
+
   return (
     <div>
-      <Navbar />
-      <Body />
+      <Navbar setToggleWindow={setToggleWindow} toggleWindow={toggleWindow} />
+      <Body toggleWindow={toggleWindow} setToggleWindow={setToggleWindow} />
     </div>
   );
 }

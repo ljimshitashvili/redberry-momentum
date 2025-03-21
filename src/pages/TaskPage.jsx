@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AddNewEmployee } from "../pages";
 import { Filter, TasksContainer } from "../components";
 import {
   getAllTasks,
@@ -14,6 +15,8 @@ const TaskPage = ({
   priorityList,
   updateTaskInList,
   commentsList,
+  toggleWindow,
+  setToggleWindow,
 }) => {
   const [allTasksList, setAllTasksList] = useState([]);
 
@@ -30,7 +33,7 @@ const TaskPage = ({
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <h1 className="font-semibold text-[34px] color-[#212529] mb-[52px]">
         დავალებების გვერდი
       </h1>
@@ -38,6 +41,11 @@ const TaskPage = ({
         departmentList={departmentList}
         employeeList={employeeList}
         priorityList={priorityList}
+      />
+      <AddNewEmployee
+        departmentList={departmentList}
+        toggleWindow={toggleWindow}
+        setToggleWindow={setToggleWindow}
       />
       <TasksContainer
         commentsList={commentsList}

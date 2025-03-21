@@ -9,7 +9,7 @@ import {
   getStatuses,
   getComments,
 } from "../services/get";
-const Body = () => {
+const Body = ({ setToggleWindow, toggleWindow }) => {
   const [departmentList, setDepartmentList] = useState([]);
   const [employeeList, setEmployeeList] = useState([]);
   const [priorityList, setPriorityList] = useState([]);
@@ -58,7 +58,7 @@ const Body = () => {
   console.log(departmentList);
 
   return (
-    <div className="w-full h-full pt-[40px] px-[120px]">
+    <div className="w-full h-full pt-[40px] px-[120px] ">
       <Routes>
         <Route
           path="/"
@@ -70,12 +70,10 @@ const Body = () => {
               allTasksList={allTasksList}
               updateTaskInList={updateTaskInList}
               commentsList={commentsList}
+              toggleWindow={toggleWindow}
+              setToggleWindow={setToggleWindow}
             />
           }
-        />
-        <Route
-          path="/add-employee"
-          element={<AddNewEmployee departmentList={departmentList} />}
         />
         <Route
           path="/task/:taskId"
