@@ -54,6 +54,18 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
 
   const handleSubmit = () => {
     postEmployee(newEmployee);
+    cancel();
+  };
+
+  const cancel = () => {
+    setNewEmployee({
+      name: "",
+      surname: "",
+      avatar: null,
+      avatarPreview: null,
+      department: "",
+    });
+    setToggleWindow(!toggleWindow);
   };
 
   return (
@@ -76,7 +88,7 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
             სახელი*
             <br />
             <input
-              className="border-[1px]"
+              className="border-[1px] border-[#CED4DA] mt-[3px] w-[384px] h-[42px] rounded-[6px] p-[10px]"
               type="text"
               id="name"
               onChange={handleInputChange}
@@ -86,7 +98,7 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
           <label htmlFor="surname">
             გვარი* <br />
             <input
-              className="border-[1px]"
+              className="border-[1px] border-[#CED4DA] mt-[3px] w-[384px] h-[42px] rounded-[6px] p-[10px]"
               type="text"
               id="surname"
               onChange={handleInputChange}
@@ -99,7 +111,7 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
           ავატარი*
         </label>
 
-        <div className="mb-[45px] relative w-full h-[120px] border-[1px] border-[#CED4DA] rounded-[8px] border-dashed flex items-center justify-center">
+        <div className="mt-[3px] mb-[45px] relative w-full h-[120px] border-[1px] border-[#CED4DA] rounded-[8px] border-dashed flex items-center justify-center">
           {newEmployee.avatarPreview ? (
             <div className="relative">
               <img
@@ -137,7 +149,7 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
           დეპარტამენტი
           <br />
           <select
-            className="border-[1px] w-[384px] h-[42px]"
+            className="border-[1px] border-[#CED4DA] mt-[3px] w-[384px] h-[42px]"
             id="department"
             onChange={handleInputChange}
             value={
@@ -152,7 +164,20 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
             ))}
           </select>
         </label>
-        <button onClick={handleSubmit}>ADD</button>
+        <div className="flex self-end mt-[65px] gap-[22px]">
+          <button
+            onClick={cancel}
+            className="w-[102px] h-[42px] text-[16px] font-normal text-[#343A40] border-[1px] border-[#8338EC] rounded-[5px]"
+          >
+            გაუქმება
+          </button>
+          <button
+            className="w-[263px] h-[42px] text-[18px] font-normal text-[#fff] border-[1px] border-[#8338EC] bg-[#8338EC] rounded-[5px]"
+            onClick={handleSubmit}
+          >
+            დაამატე თანამშრომელი
+          </button>
+        </div>
       </div>
     </div>
   );
