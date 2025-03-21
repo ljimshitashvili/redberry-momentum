@@ -5,7 +5,14 @@ const Navbar = ({ toggleWindow, setToggleWindow }) => {
   return (
     <div className="flex w-full h-[100px] justify-between px-[120px] py-[31px] ">
       <Link to="/">
-        <img src={logo} alt="Logo" className="w-[210px]" />
+        <img
+          src={logo}
+          alt="Logo"
+          className="w-[210px]"
+          onClick={() => {
+            window.location.reload();
+          }}
+        />
       </Link>
       <div className="button-container flex justify-between w-[533px] h-[40px]">
         <Link to={"/addemployee"}>

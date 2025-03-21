@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import updateTaskStatus from "../services/put/changeTaskStatus";
-import { CommentsSection, Priorities } from "../components";
+import { CommentsSection } from "../components";
 import { due, status, user } from "../assets";
 
 const TaskDetails = ({

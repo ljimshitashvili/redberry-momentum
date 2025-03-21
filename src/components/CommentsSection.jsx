@@ -23,19 +23,26 @@ const CommentsSection = ({ commentsList, taskId, setCommentsList }) => {
   };
 
   return (
-    <div>
+    <div className="bg-[#F8F3FEA6] border-[0.3px] border-[#DDD2FF] py-10 px-[45px] relative">
       <textarea
-        className="border-[1px] w-[500px] h-[200px]"
+        className="border-[0.3px] border-[#ADB5BD] pt-7 px-5 pb-[15px] w-[500px] h-[200px] bg-white mb-[66px] rounded-[10px]"
         placeholder="დაამატე კომენტარი"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
       <button
         onClick={handleSubmit}
-        className="bg-blue-500 text-white p-2 mt-2"
+        className=" text-white top-[190px] right-[60px] absolute bg-[#8338EC] rounded-[20px] w-[155px] h-[35px] text-[16px]"
       >
-        Submit
+        დააკომენტარე
       </button>
+
+      <h1 className="font-medium flex gap-[7px] items-center">
+        კომენტარები{" "}
+        <span className="rounded-[30px] bg-[#8338EC] w-[30px] h-[22px] flex items-center justify-center text-white text-[14px] font-medium">
+          {commentsList.length}
+        </span>
+      </h1>
 
       <h1>
         {commentsList.map((comment) => (
