@@ -28,8 +28,8 @@ const AddNewTask = ({
     name: "",
     description: "",
     due_date: getTomorrowDate(),
-    status: "",
-    priority: "",
+    status: "დასაწყები",
+    priority: "საშუალო",
     department: "",
     employee: "",
     ...getSavedFormValues(),
@@ -69,9 +69,11 @@ const AddNewTask = ({
   };
 
   return (
-    <div>
-      <h1>შექმენი ახალი დავალება</h1>
-      <div className="bg-[#DDD2FF] p-4">
+    <div className="">
+      <h1 className="mt-[40px] mb-[25px] font-semibold text-[34px] text-[#212529]">
+        შექმენი ახალი დავალება
+      </h1>
+      <div className="border-[0.3px] border-[#DDD2FF] bg-[#FBF9FFA6] pt-[71px] pb-[216px] pr-[368px] pl-[55px]">
         <Formik
           initialValues={initialValues}
           validationSchema={AddNewTaskSchema}
@@ -90,148 +92,155 @@ const AddNewTask = ({
             }, [values.department, setFieldValue]);
 
             return (
-              <Form>
-                <div>
-                  <label htmlFor="name">სათაური*</label>
-                  <Field
-                    type="text"
-                    name="name"
-                    className="border border-black w-full"
-                  />
-                  <ErrorMessage
-                    name="name"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="description">აღწერა*</label>
-                  <Field
-                    type="text"
-                    name="description"
-                    className="border border-black w-full"
-                  />
-                  <ErrorMessage
-                    name="description"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="department">დეპარტამენტი*</label>
-                  <Field
-                    as="select"
-                    name="department"
-                    className="border border-black w-full"
-                  >
-                    <option value=""></option>
-                    {departmentList.map((dept) => (
-                      <option key={dept.id} value={dept.name}>
-                        {dept.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="department"
-                    component="div"
-                    className="text-red-500"
-                  />
-                </div>
-
-                {values.department && (
-                  <div>
-                    <label htmlFor="employee">
-                      პასუხისმგებელი თანამშრომელი*
-                    </label>
+              <Form className="flex flex-col">
+                <div className="flex justify-between mb-[57px]">
+                  <div className="flex flex-col">
+                    <label>სათაური*</label>
                     <Field
-                      as="select"
-                      name="employee"
-                      className="border border-black w-full"
-                    >
-                      <option value=""></option>
-                      {employeeList
-                        .filter(
-                          (staff) => staff.department.name === values.department
-                        )
-                        .map((staff) => (
-                          <option
-                            key={staff.id}
-                            value={`${staff.name} ${staff.surname}`}
-                          >
-                            {staff.name} {staff.surname}
-                          </option>
-                        ))}
-                    </Field>
+                      type="text"
+                      name="name"
+                      className="w-[550px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                    />
                     <ErrorMessage
-                      name="employee"
+                      name="name"
                       component="div"
                       className="text-red-500"
                     />
                   </div>
-                )}
 
-                <div>
-                  <label htmlFor="priority">პრიორიტეტი*</label>
-                  <Field
-                    as="select"
-                    name="priority"
-                    className="border border-black w-full"
-                  >
-                    <option value=""></option>
-                    {priorityList.map((priority) => (
-                      <option key={priority.id} value={priority.name}>
-                        {priority.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="priority"
-                    component="div"
-                    className="text-red-500"
-                  />
+                  <div className="flex flex-col">
+                    <label htmlFor="department">დეპარტამენტი*</label>
+                    <Field
+                      as="select"
+                      name="department"
+                      className="w-[550px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                    >
+                      <option value=""></option>
+                      {departmentList.map((dept) => (
+                        <option key={dept.id} value={dept.name}>
+                          {dept.name}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="department"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label htmlFor="status">სტატუსი*</label>
-                  <Field
-                    as="select"
-                    name="status"
-                    className="border border-black w-full"
-                  >
-                    <option value=""></option>
-                    {statusesList.map((status) => (
-                      <option key={status.id} value={status.name}>
-                        {status.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="status"
-                    component="div"
-                    className="text-red-500"
-                  />
+                <div className="flex justify-between mb-[55px]">
+                  <div className="flex flex-col ">
+                    <label htmlFor="description">აღწერა*</label>
+                    <Field
+                      type="text"
+                      name="description"
+                      className="w-[550px] h-[133px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
+
+                  {values.department && (
+                    <div className="w-min">
+                      <label htmlFor="employee">
+                        პასუხისმგებელი თანამშრომელი*
+                      </label>
+                      <Field
+                        as="select"
+                        name="employee"
+                        className="w-[550px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                      >
+                        <option value=""></option>
+                        {employeeList
+                          .filter(
+                            (staff) =>
+                              staff.department.name === values.department
+                          )
+                          .map((staff) => (
+                            <option
+                              key={staff.id}
+                              value={`${staff.name} ${staff.surname}`}
+                            >
+                              {staff.name} {staff.surname}
+                            </option>
+                          ))}
+                      </Field>
+                      <ErrorMessage
+                        name="employee"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
+                  )}
                 </div>
 
-                <div>
-                  <label htmlFor="due_date">დედლაინი</label>
-                  <Field
-                    type="date"
-                    name="due_date"
-                    min={new Date().toISOString().split("T")[0]}
-                    className="border border-black w-full"
-                  />
-                  <ErrorMessage
-                    name="due_date"
-                    component="div"
-                    className="text-red-500"
-                  />
+                <div className="flex justify-between gap-[161px]">
+                  <div className="w-[550px] flex justify-between mb-[55px] gap-[55px]">
+                    <div>
+                      <label htmlFor="priority">პრიორიტეტი*</label>
+                      <Field
+                        as="select"
+                        name="priority"
+                        className="w-[259px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                      >
+                        {priorityList.map((priority) => (
+                          <option key={priority.id} value={priority.name}>
+                            {priority.name}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage
+                        name="priority"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="status">სტატუსი*</label>
+                      <Field
+                        as="select"
+                        name="status"
+                        className="w-[259px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                      >
+                        {statusesList.map((status) => (
+                          <option key={status.id} value={status.name}>
+                            {status.name}
+                          </option>
+                        ))}
+                      </Field>
+                      <ErrorMessage
+                        name="status"
+                        component="div"
+                        className="text-red-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label htmlFor="due_date">დედლაინი</label>
+                    <Field
+                      type="date"
+                      name="due_date"
+                      min={new Date().toISOString().split("T")[0]}
+                      className="w-[320px] h-[45px] rounded-[5px] border-[1px] border-[#DEE2E6]"
+                    />
+                    <ErrorMessage
+                      name="due_date"
+                      component="div"
+                      className="text-red-500"
+                    />
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="bg-[#8338EC] text-white mt-4 p-2"
+                  className="mt-[145px] bg-[#8338EC] rounded-[5px] w-[208px] h-[42px] text-[#fff] text-[18px] font-normal self-end"
                 >
                   დავალების შექმნა
                 </button>
