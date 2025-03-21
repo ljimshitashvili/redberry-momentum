@@ -88,6 +88,17 @@ const Body = ({ setToggleWindow, toggleWindow }) => {
         />
 
         <Route
+          path="addemployee"
+          element={
+            <AddNewEmployee
+              departmentList={departmentList}
+              toggleWindow={toggleWindow}
+              setToggleWindow={setToggleWindow}
+            />
+          }
+        />
+
+        <Route
           path="/add-new-task"
           element={
             <AddNewTask

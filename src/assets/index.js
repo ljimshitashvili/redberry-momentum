@@ -4,3 +4,6 @@ export { default as arrow } from "./arrow.png";
 export { default as comment } from "./comment.png";
 export { default as x } from "./X.png";
 export { default as trash } from "./trash.png";
+export { default as status } from "./status.png";
+export { default as user } from "./user.png";
+export { default as due } from "./due.png";

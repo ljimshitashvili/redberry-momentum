@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { postEmployee } from "../services/post";
 import { x, trash } from "../assets";
+import { Link } from "react-router-dom";
 
 const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
   const [newEmployee, setNewEmployee] = useState({
@@ -74,12 +75,14 @@ const AddNewEmployee = ({ departmentList, toggleWindow, setToggleWindow }) => {
       style={{ display: toggleWindow ? "block" : "none" }}
     >
       <div className="h-[766px] mt-[118px] justify-self-center bg-[#fff] opacity-100 rounded-[10px] py-10 px-[50px] w-[913px] flex flex-col">
-        <button
-          className="self-end cursor-pointer w-10 h-10"
-          onClick={() => setToggleWindow(!toggleWindow)}
-        >
-          <img src={x} alt="Close Icon" />
-        </button>
+        <Link to={"/"} className="self-end">
+          <button
+            className=" cursor-pointer w-10 h-10"
+            onClick={() => setToggleWindow(!toggleWindow)}
+          >
+            <img src={x} alt="Close Icon" />
+          </button>
+        </Link>
         <h1 className="self-center font-medium text-[32px] text-[#212529]">
           თანამშრომლის დამატება
         </h1>

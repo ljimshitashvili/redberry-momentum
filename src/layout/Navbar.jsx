@@ -8,12 +8,14 @@ const Navbar = ({ toggleWindow, setToggleWindow }) => {
         <img src={logo} alt="Logo" className="w-[210px]" />
       </Link>
       <div className="button-container flex justify-between w-[533px] h-[40px]">
-        <button
-          onClick={() => setToggleWindow(!toggleWindow)}
-          className="cursor-pointer border-[1px] w-[225px] h-full border-[#8338EC] rounded-[5px] flex items-center justify-center"
-        >
-          თანამშრომლის შექმნა
-        </button>
+        <Link to={"/addemployee"}>
+          <button
+            onClick={() => setToggleWindow(!toggleWindow)}
+            className="cursor-pointer border-[1px] w-[225px] h-full border-[#8338EC] rounded-[5px] flex items-center justify-center"
+          >
+            თანამშრომლის შექმნა
+          </button>
+        </Link>
         <Link
           to="add-new-task"
           className="flex cursor-pointer border-[1px] w-[268px] h-full border-[#8338EC] rounded-[5px] items-center justify-center gap-[9px] bg-[#8338EC] text-[#fff]"

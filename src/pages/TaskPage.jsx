@@ -42,11 +42,7 @@ const TaskPage = ({
         employeeList={employeeList}
         priorityList={priorityList}
       />
-      <AddNewEmployee
-        departmentList={departmentList}
-        toggleWindow={toggleWindow}
-        setToggleWindow={setToggleWindow}
-      />
+
       <TasksContainer
         commentsList={commentsList}
         allTasksList={allTasksList}
